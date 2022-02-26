@@ -1,54 +1,43 @@
 package ru.gb.testing;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Arrays;
-import java.util.Collection;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(value = Parameterized.class)
+import java.util.stream.Stream;
+
 public class ParametrizedTest {
-    private Calculator calc;
+    private static Calculator calc;
 
-    private int x1;
-    private int x2;
-    private int res;
-
-    @Parameterized.Parameters
-    public static Collection abracadabra() {
-        return Arrays.asList(
-                new Object[][]{
-                        {2, 5, 7},
-                        {3, 3, 6},
-                        {1, 1, 2},
-                        {5, 5, 10}
-                }
-        );
-    }
-
-    public ParametrizedTest(int x1, int x2, int res) {
-        this.x1 = x1;
-        this.x2 = x2;
-        this.res = res;
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        calc = null;
-    }
-
-    @Before
-    public void init() {
-        System.out.println("init calc");
+    @BeforeAll
+    public static void init() {
         calc = new Calculator();
     }
 
-    @Test
-    public void paramAddingTest() {
-        Assert.assertEquals(res, calc.add(x1, x2));
+    private static Stream<Arguments> provideArgs() {
+        return Stream.of(
+                Arguments.of(1, 1, 2),
+                Arguments.of(0, 0, 0),
+                Arguments.of(2, 2, 4),
+                Arguments.of(-1, 1, 0),
+                Arguments.of(2000, 2001, 4001),
+                Arguments.of(2, 2, 4)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideArgs")
+    public void test(int a, int b, int expected) {
+        assertEquals(expected, calc.add(a, b));
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "data.csv", numLinesToSkip = 1)
+    public void testCsv(int a, int b, int expected) {
+        assertEquals(expected, calc.add(a, b));
     }
 }

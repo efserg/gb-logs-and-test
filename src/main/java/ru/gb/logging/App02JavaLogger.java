@@ -3,7 +3,7 @@ package ru.gb.logging;
 import java.io.IOException;
 import java.util.logging.*;
 
-// OFF < SEVERE < WARNING < INFO < CONFIG < FINE < FINER < FINEST < ALL
+// SEVERE < WARNING < INFO < CONFIG < FINE < FINER < FINEST
 
 public class App02JavaLogger {
     public static final Logger logger = Logger.getLogger(App02JavaLogger.class.getName());
@@ -12,26 +12,26 @@ public class App02JavaLogger {
         logger.fine("Program started");
         final App02JavaLogger app = new App02JavaLogger();
 
-//        Handler h = null;
-//        try {
-//            logger.setLevel(Level.FINEST);
-//            h = new FileHandler("mylogsimple.log");
-//            h.setFormatter(new SimpleFormatter());
-//            logger.addHandler(h);
-//            h = new FileHandler("mylogxml.log");
-//            h.setFormatter(new XMLFormatter());
-//            logger.addHandler(h);
-//            // h = new SocketHandler();
-//            // h = new ConsoleHandler();
-//            // h = new StreamHandler();
-//            // h = new MemoryHandler();
-//            System.out.println("Handlers");
-//            for (Handler o : logger.getHandlers()) {
-//                System.out.println(o);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        Handler h = null;
+        try {
+            logger.setLevel(Level.FINEST);
+            h = new FileHandler("mylogsimple.log");
+            h.setFormatter(new SimpleFormatter());
+            logger.addHandler(h);
+            h = new FileHandler("mylogxml.log");
+            h.setFormatter(new XMLFormatter());
+            logger.addHandler(h);
+            // h = new SocketHandler();
+            // h = new ConsoleHandler();
+            // h = new StreamHandler();
+            // h = new MemoryHandler();
+            System.out.println("Handlers");
+            for (Handler o : logger.getHandlers()) {
+                System.out.println(o);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         app.run();
     }

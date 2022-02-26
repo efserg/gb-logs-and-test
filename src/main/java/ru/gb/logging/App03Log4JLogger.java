@@ -5,7 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 // уровни логгирования
-// OFF < TRACE < DEBUG < INFO < WARN < ERROR < FATAL < ALL
+// FATAL < ERROR < WARN < INFO < DEBUG < TRACE
 public class App03Log4JLogger {
     private static final Logger logger = LogManager.getLogger(App03Log4JLogger.class);
 
